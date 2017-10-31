@@ -4,6 +4,18 @@
 #include "bst.h"
 #include "list.h"
 
+typedef struct Data Data;
+struct Data { int value; };
+void* data_new(int value) {
+    Data *data = (Data*)malloc(sizeof(Data));
+    data->value = value + 1;
+    return data;
+}
+void print_data(void *data) {
+    Data *d = (Data*)data;
+    printf("%d ", d->value);
+}
+
 BstNode* add_node(BstNode *node, int data);
 BstNode* balance_node(BstNode *node);
 BstNode* rotate_left(BstNode *node);
@@ -13,7 +25,8 @@ int height(BstNode *node);
 BstNode* list2avl(ListItem *head) {
     BstNode *root = 0;
     while (head) {
-        root = add_node(root, head->data);
+        Data *data = (Data*)head->data;
+        root = add_node(root, data->value);
         head = head->next;
     }
     return root;
@@ -54,10 +67,7 @@ int height(BstNode *node) {
 }
 
 int main() {
-    ListItem *list = new_list(10);
-    print_list(list);
+    ListItem *list = list_new(10, data_new);
+    list_print(list, print_data);
     print_bst(list2avl(list));
-    BstNode *node = new_bst_node(1, new_bst_node(2, 0, 0), new_bst_node(3, new_bst_node(4, 0, new_bst_node(5, 0, 0)), 0));
-    print_bst(node);
-    printf("%d\n", height(node));
 }

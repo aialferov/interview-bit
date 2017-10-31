@@ -3,11 +3,6 @@
 
 #include "bst.h"
 
-struct BstNode {
-    int data;
-    BstNode *left;
-    BstNode *right;
-};
 BstNode* new_bst_node(int data, BstNode *left, BstNode *right) {
     BstNode *node = (BstNode*)malloc(sizeof(BstNode));
     node->data = data;
