@@ -12,6 +12,9 @@ Stack* stack_new() {
 	stack->head = 0;
 	return stack;
 }
+void stack_delete(Stack *stack) {
+    free(stack);
+}
 void stack_push(Stack *stack, void *data) {
 	stack->head = list_new_item(data, stack->head);
 }

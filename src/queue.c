@@ -14,6 +14,9 @@ Queue* queue_new() {
     queue->tail = 0;
     return queue;
 }
+void queue_delete(Queue *queue) {
+    free(queue);
+}
 void queue_push(Queue *queue, void *data) {
     if (queue->tail) {
         queue->tail->next = list_new_item(data, 0);
