@@ -17,6 +17,12 @@ COMPILE = gcc -o $(TMPDIR)/$*.o -I $(INCLUDEDIR) -c $(SRCDIR)/$*.c
 bindir:
 	mkdir -p $(BINDIR)
 
+list:
+	@grep main -rl src/ | cut -d/ -f3 | cut -d\. -f1
+
+edit-%:
+	@vi $(SRCDIR)/$*.c
+
 compile-%:
 	$(COMPILE)
 
