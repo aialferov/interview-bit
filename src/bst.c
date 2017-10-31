@@ -24,6 +24,9 @@ void bst_delete(BstNode *node) {
     if (node->right) bst_delete(node->right);
     free(node);
 }
+int bst_size(BstNode *node) {
+    return !node ? 0 : 1 + bst_size(node->left) + bst_size(node->right);
+}
 void bst_print_node(BstNode *node) {
     if (!node) return;
     printf("%d ", node->data);
