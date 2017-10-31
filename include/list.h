@@ -1,10 +1,11 @@
 typedef struct ListItem ListItem;
 struct ListItem {
-    int data;
+    void *data;
     ListItem *next;
 };
 
-ListItem* new_list(int);
-ListItem* new_list_item(int, ListItem*);
+ListItem* list_new(int, void* (*)(int));
+ListItem* list_new_item(void*, ListItem*);
+void list_delete_item(ListItem*);
 
-void print_list(ListItem*);
+void list_print(ListItem*, void (*)(void*));

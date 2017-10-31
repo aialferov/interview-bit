@@ -3,28 +3,31 @@
 
 #include "list.h"
 
-ListItem* new_list(int N) {
+ListItem* list_new(int N, void* (*data_new)(int)) {
     ListItem *head = 0, *item = 0;
-    for (int i=1; i<=9; ++i) {
+    for (int i=0; i<N; ++i) {
         if (!head) {
-            head = new_list_item(i, 0);
+            head = list_new_item(data_new(i), 0);
             item = head;
         } else {
-            item->next = new_list_item(i, 0);
+            item->next = list_new_item(data_new(i), 0);
             item = item->next;
         }
     }
     return head;
 }
-ListItem* new_list_item(int data, ListItem *next) {
+ListItem* list_new_item(void *data, ListItem *next) {
     ListItem *item = (ListItem*)malloc(sizeof(ListItem));
     item->data = data;
     item->next = next;
     return item;
 }
-void print_list(ListItem *head) {
+void list_delete_item(ListItem *item) {
+    free(item);
+}
+void list_print(ListItem *head, void (*print)(void*)) {
     while(head) {
-        printf("%d ", head->data);
+        print(head->data);
         head = head->next;
     }
     printf("\n");
