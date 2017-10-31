@@ -1,6 +1,7 @@
 # Interviewbit
 
-Set of C-language based solutions of tasks from interviewbit.com.
+Set of C-language based solutions of tasks from
+[Interviewbit](http://interviewbit.com).
 
 ## Usage
 
