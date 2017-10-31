@@ -5,5 +5,5 @@ struct BstNode {
     BstNode *right;
 };
 
-BstNode* new_bst_node(int, BstNode*, BstNode*);
-void print_bst(BstNode*);
+BstNode* bst_new_node(int, BstNode*, BstNode*);
+void bst_print(BstNode*);

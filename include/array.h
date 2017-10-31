@@ -1,1 +1,1 @@
-void print_array(int*, int);
+void array_print(int*, int);

@@ -33,7 +33,7 @@ BstNode* list2avl(ListItem *head) {
 }
 
 BstNode* add_node(BstNode *node, int data) {
-    if (!node) return new_bst_node(data, 0, 0);
+    if (!node) return bst_new_node(data, 0, 0);
 
     if (data > node->data)
         node->right = add_node(node->right, data);
@@ -69,5 +69,5 @@ int height(BstNode *node) {
 int main() {
     ListItem *list = list_new(10, data_new);
     list_print(list, print_data);
-    print_bst(list2avl(list));
+    bst_print(list2avl(list));
 }
