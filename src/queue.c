@@ -36,6 +36,9 @@ void queue_pop(Queue *queue) {
 
     list_delete_item(head);
 }
+int queue_empty(Queue *queue) {
+    return queue->head ? 0 : 1;
+}
 void* queue_head(Queue *queue) {
     return queue->head ? queue->head->data : 0;
 }

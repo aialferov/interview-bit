@@ -18,6 +18,12 @@ BstNode* bst_new_node(int data, BstNode *left, BstNode *right) {
     node->right = right;
     return node;
 }
+void bst_delete(BstNode *node) {
+    if (!node) return;
+    if (node->left) bst_delete(node->left);
+    if (node->right) bst_delete(node->right);
+    free(node);
+}
 void bst_print_node(BstNode *node) {
     if (!node) return;
     printf("%d ", node->data);

@@ -26,6 +26,9 @@ void stack_pop(Stack *stack) {
 
 	list_delete_item(head);
 }
+int stack_empty(Stack *stack) {
+    return stack->head ? 0 : 1;
+}
 void* stack_head(Stack *stack) {
 	return stack->head ? stack->head->data : 0;
 }
