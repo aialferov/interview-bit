@@ -49,29 +49,82 @@ int* traversal_preorder(BstNode *T, int *An) {
         if (node->left) stack_push(stack, node->left);
         A[i++] = node->data;
     }
+    stack_delete(stack);
 
     return A;
 }
 
-int* traversal_postorder(BstNode *T, int *An) {
+void traversal_inorder1(BstNode*, int*, int*);
+int* traversal_inorder(BstNode *T, int *An) {
     *An = bst_size(T);
     int i = 0, *A = (int*)malloc(*An*sizeof(int));
 
+    if (T->left) traversal_inorder1(T->left, A, &i);
+    A[i++] = T->data;
+    if (T->right) traversal_inorder1(T->right, A, &i);
+
+    return A;
+}
+void traversal_inorder1(BstNode *T, int *A, int *Ai) {
     Stack *stack = stack_new();
     stack_push(stack, T);
     while(!stack_empty(stack)) {
         BstNode *node = stack_take(stack);
-        if (node->left) stack_push(stack, node->left);
         if (node->right) stack_push(stack, node->right);
-        A[i++] = node->data;
+        stack_push(stack, node);
+        if (node->left) stack_push(stack, node->left);
+        if (!node->left && !node->right) {
+            while(!stack_empty(stack)) {
+                BstNode *node = stack_take(stack);
+                A[*Ai] = node->data;
+                *Ai = *Ai + 1;
+            }
+        }
     }
+    stack_delete(stack);
+}
+
+void traversal_postorder1(BstNode*, int*, int*);
+int* traversal_postorder(BstNode *T, int *An) {
+    *An = bst_size(T);
+    int i = 0, *A = (int*)malloc(*An*sizeof(int));
+
+    if (T->left) traversal_postorder1(T->left, A, &i);
+    if (T->right) traversal_postorder1(T->right, A, &i);
+    A[i] = T->data;
 
     return A;
+}
+void traversal_postorder1(BstNode *T, int *A, int *Ai) {
+    Stack *stack = stack_new();
+    stack_push(stack, T);
+    while(!stack_empty(stack)) {
+        BstNode *node = stack_head(stack);
+        if (node->right) stack_push(stack, node->right);
+        if (node->left) stack_push(stack, node->left);
+        if (!node->left && !node->right) {
+            while(!stack_empty(stack)) {
+                BstNode *node = stack_take(stack);
+                A[*Ai] = node->data;
+                *Ai = *Ai + 1;
+            }
+        }
+    }
+    stack_delete(stack);
+}
+
+void traversal_depth_order(BstNode *T) {
+    if (!T) return;
+    traversal_depth_order(T->left);
+    printf("%d ", T->data); // move this line up or down
+                            // to get pre- or postorder accordingly
+    traversal_depth_order(T->right);
 }
 
 int main() {
     int A[] = {1,2,3,4,5,6,7,8,9};
     BstNode *T = bst_from_array(A, sizeof(A)/sizeof(int));
+
     printf("BST: ");
     bst_print(T);
 
@@ -87,10 +140,19 @@ int main() {
     array_print(At, An);
     free(At);
 
+    At = traversal_inorder(T, &An);
+    printf("Inorder: ");
+    array_print(At, An);
+    free(At);
+
     At = traversal_postorder(T, &An);
     printf("Postorder: ");
     array_print(At, An);
     free(At);
+
+    printf("Depth order: ");
+    traversal_depth_order(T);
+    printf("\n");
 
     bst_delete(T);
 }
