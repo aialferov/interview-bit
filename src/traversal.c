@@ -112,7 +112,6 @@ void traversal_postorder1(BstNode *T, int *A, int *Ai) {
     }
     stack_delete(stack);
 }
-
 void traversal_depth_order(BstNode *T) {
     if (!T) return;
     traversal_depth_order(T->left);
