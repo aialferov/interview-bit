@@ -37,4 +37,7 @@ run-%: build-%
 	./$(BINDIR)/$*
 
 debug-%:
+	@$(BUILD) -g && gdb ./$(BINDIR)/$*
+
+watch-%:
 	@watch "$(BUILD) && ./$(BINDIR)/$*"
